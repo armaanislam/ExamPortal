@@ -1,1 +1,42 @@
-<p>login works!</p>
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row mt20">
+      <div class="col-md-6 offset-md-3">
+        <mat-card>
+          <div class="container text-center">
+            <img src="/assets/logo.png" alt="" style="width: 100px">
+          </div>
+
+          <h1 class="text-center">User Login</h1>
+
+          <div class="container text-center">
+            <form>
+
+              <!-- Username Field -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Username</mat-label>
+                <input required name="username" matInput placeholder="Enter Here">
+                <mat-hint>Valid Username</mat-hint>
+              </mat-form-field>
+
+              <!-- Password Field -->
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput required [type]="showPassword ? 'text' : 'password'" name="password" type="password" matInput>
+                <mat-icon matSuffix (click)="togglePasswordVisibility()">
+                  {{showPassword?'visibility_off':'visibility'}}
+                </mat-icon>
+              </mat-form-field>
+              <div class="container text-center">
+                <button type="submit" mat-raised-button color="primary">Login</button>
+                <button class="ml20" mat-raised-button color="warn">Clear</button>
+              </div>
+
+            </form>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
+

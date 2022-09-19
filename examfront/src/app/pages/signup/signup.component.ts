@@ -16,6 +16,8 @@ export class SignupComponent implements OnInit {
   ) {
   }
 
+  public showPassword: boolean = false;
+
   public user = {
     username: '',
     password: '',
@@ -56,6 +58,10 @@ export class SignupComponent implements OnInit {
       }
     )
 
+  }
+
+  public togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
 }
