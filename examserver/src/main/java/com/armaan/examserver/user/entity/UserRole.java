@@ -1,4 +1,4 @@
-package com.armaan.examserver.entity;
+package com.armaan.examserver.user.entity;
 
 import lombok.*;
 

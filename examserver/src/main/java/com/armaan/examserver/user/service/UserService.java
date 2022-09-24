@@ -1,7 +1,7 @@
-package com.armaan.examserver.service;
+package com.armaan.examserver.user.service;
 
-import com.armaan.examserver.entity.User;
-import com.armaan.examserver.entity.UserRole;
+import com.armaan.examserver.user.entity.User;
+import com.armaan.examserver.user.entity.UserRole;
 
 import java.util.Set;
 

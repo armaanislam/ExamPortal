@@ -1,11 +1,13 @@
-package com.armaan.examserver.service.impl;
+package com.armaan.examserver.user.serviceImpl;
 
-import com.armaan.examserver.entity.User;
-import com.armaan.examserver.entity.UserRole;
-import com.armaan.examserver.repository.RoleRepository;
-import com.armaan.examserver.repository.UserRepository;
-import com.armaan.examserver.service.UserService;
+import com.armaan.examserver.user.entity.User;
+import com.armaan.examserver.user.entity.UserRole;
+import com.armaan.examserver.user.repository.RoleRepository;
+import com.armaan.examserver.user.repository.UserRepository;
+import com.armaan.examserver.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -18,6 +20,8 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // Creating User
     @Override
@@ -34,17 +38,21 @@ public class UserServiceImpl implements UserService {
                 roleRepository.save(ur.getRole()); // Saving each new role
             }
             user.getUserRoles().addAll(userRoles); // Assigning role in users before saving the users
+            String encodedPassword = this.bCryptPasswordEncoder.encode(user.getPassword());
+            user.setPassword(encodedPassword);
             userLocal = this.userRepository.save(user);
         }
         return userLocal;
     }
 
+    // Getting User by Username
     @Override
     public User findUserByUserName(String username) {
 
         return this.userRepository.findByUsername(username);
     }
 
+    // Deleting User by Id
     @Override
     public void deleteUserById(Long userId) {
 

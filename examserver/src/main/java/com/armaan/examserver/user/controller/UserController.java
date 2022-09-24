@@ -1,10 +1,9 @@
-package com.armaan.examserver.controller;
+package com.armaan.examserver.user.controller;
 
-import com.armaan.examserver.entity.Role;
-import com.armaan.examserver.entity.User;
-import com.armaan.examserver.entity.UserRole;
-import com.armaan.examserver.repository.UserRepository;
-import com.armaan.examserver.service.UserService;
+import com.armaan.examserver.user.entity.Role;
+import com.armaan.examserver.user.entity.User;
+import com.armaan.examserver.user.entity.UserRole;
+import com.armaan.examserver.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +18,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Creating User
+    // User Registration
     @PostMapping("/")
     public User createUser(@RequestBody User user) throws Exception {
 
@@ -51,4 +50,11 @@ public class UserController {
         this.userService.deleteUserById(userId);
     }
 
+    // Updating User by userId
+
+    // User Not Found Exception
+//    @ExceptionHandler(UserNotFoundException.class)
+//    public ResponseEntity<?> exceptionHandler(UserNotFoundException ex) {
+//        return ResponseEntity;
+//    }
 }

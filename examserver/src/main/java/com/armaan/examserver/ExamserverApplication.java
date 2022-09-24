@@ -1,16 +1,10 @@
 package com.armaan.examserver;
 
-import com.armaan.examserver.entity.Role;
-import com.armaan.examserver.entity.User;
-import com.armaan.examserver.entity.UserRole;
-import com.armaan.examserver.service.UserService;
+import com.armaan.examserver.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @SpringBootApplication
 public class ExamserverApplication implements CommandLineRunner {
