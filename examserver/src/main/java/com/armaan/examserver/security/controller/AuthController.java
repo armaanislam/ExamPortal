@@ -1,7 +1,7 @@
 package com.armaan.examserver.security.controller;
 
 import com.armaan.examserver.security.config.JwtTokenUtil;
-import com.armaan.examserver.security.entity.JwtRequest;
+import com.armaan.examserver.security.entity.JwtTokenRequest;
 import com.armaan.examserver.security.entity.JwtTokenResponse;
 import com.armaan.examserver.security.serviceImpl.JwtUserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 //@CrossOrigin (origins = "http://localhost:8087" , exposedHeaders = "requestTokenHeader")
-public class AuthenticateController {
+public class AuthController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -40,14 +40,14 @@ public class AuthenticateController {
 
     // Generate Token
     @PostMapping("/generate-token")
-    public ResponseEntity<?> generateToken(@RequestBody JwtRequest jwtRequest) throws Exception {
+    public ResponseEntity<?> generateToken(@RequestBody JwtTokenRequest jwtTokenRequest) throws Exception {
         try {
-            authenticate(jwtRequest.getUsername(), jwtRequest.getPassword());
+            authenticate(jwtTokenRequest.getUsername(), jwtTokenRequest.getPassword());
         } catch (Exception e) {
             e.printStackTrace();
             throw new Exception("User not found");
         }
-        UserDetails userDetails = this.jwtUserDetailsServiceImpl.loadUserByUsername(jwtRequest.getUsername());
+        UserDetails userDetails = this.jwtUserDetailsServiceImpl.loadUserByUsername(jwtTokenRequest.getUsername());
         String token = this.jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtTokenResponse(token));
     }

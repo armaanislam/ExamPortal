@@ -5,9 +5,9 @@ import com.armaan.examserver.user.entity.UserRole;
 import com.armaan.examserver.user.repository.RoleRepository;
 import com.armaan.examserver.user.repository.UserRepository;
 import com.armaan.examserver.user.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     // Creating User
     @Override
@@ -31,15 +31,13 @@ public class UserServiceImpl implements UserService {
         User userLocal;
 
         if (local != null) {
-            System.out.println("User is already here");
+            logger.error("User already present");
             throw new Exception("User already present");
         } else {
             for (UserRole ur : userRoles) {
                 roleRepository.save(ur.getRole()); // Saving each new role
             }
             user.getUserRoles().addAll(userRoles); // Assigning role in users before saving the users
-//            String encodedPassword = this.bCryptPasswordEncoder.encode(user.getPassword());
-//            user.setPassword(encodedPassword);
             userLocal = this.userRepository.save(user);
         }
         return userLocal;
