@@ -25,7 +25,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     private JwtAuthenticationEntryPoint unauthorizedHandler;
 
     @Autowired
-    private JwtAuthenticationFilter jwtAuthenticationFilter;
+    private JwtTokenAuthenticationFilter jwtTokenAuthenticationFilter;
 
     @Autowired
     private JwtUserDetailsServiceImpl jwtUserDetailsServiceImpl;
@@ -66,6 +66,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler) // unauthorizedHandler return the error if there is any
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // Before getting any requests, the jwt token is authenticated using jwtAuthenticationFilter
+        http.addFilterBefore(jwtTokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // Before getting any requests, the jwt token is authenticated using jwtAuthenticationFilter
     }
 }

@@ -13,11 +13,25 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="roles")
+@Table(
+        name = "roles",
+        uniqueConstraints = @UniqueConstraint(
+                name = "roleName_unique",
+                columnNames = "roleName"
+        )
+)
 public class Role {
 
-    @Id // Do not need to auto generate role id as there are only 3 roles
-    @Column(name = "roleId")
+    @Id
+    @SequenceGenerator(
+            name = "role_sequence",
+            sequenceName = "role_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "role_sequence"
+    )
     private Long roleId;
     @Column(name = "roleName")
     private String roleName;

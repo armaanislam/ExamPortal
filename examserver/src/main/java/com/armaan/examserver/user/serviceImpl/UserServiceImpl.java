@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+//    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     // Creating User
     @Override
@@ -38,8 +38,8 @@ public class UserServiceImpl implements UserService {
                 roleRepository.save(ur.getRole()); // Saving each new role
             }
             user.getUserRoles().addAll(userRoles); // Assigning role in users before saving the users
-            String encodedPassword = this.bCryptPasswordEncoder.encode(user.getPassword());
-            user.setPassword(encodedPassword);
+//            String encodedPassword = this.bCryptPasswordEncoder.encode(user.getPassword());
+//            user.setPassword(encodedPassword);
             userLocal = this.userRepository.save(user);
         }
         return userLocal;

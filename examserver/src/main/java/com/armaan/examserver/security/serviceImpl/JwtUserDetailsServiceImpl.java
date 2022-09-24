@@ -16,7 +16,6 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
@@ -25,6 +24,6 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
             System.out.println("User not found!");
             throw new UsernameNotFoundException("No user found!");
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
+        return user;
     }
 }

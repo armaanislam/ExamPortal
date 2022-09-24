@@ -13,7 +13,15 @@ import javax.persistence.*;
 public class UserRole {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(
+            name = "userRole_sequence",
+            sequenceName = "userRole_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            strategy = GenerationType.SEQUENCE,
+            generator = "userRole_sequence"
+    )
     private Long userRoleId;
 
     @ManyToOne(fetch = FetchType.EAGER)
