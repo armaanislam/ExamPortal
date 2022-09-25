@@ -4,8 +4,6 @@ import com.armaan.examserver.security.serviceImpl.JwtUserDetailsServiceImpl;
 import com.armaan.examserver.user.serviceImpl.UserServiceImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
 
@@ -29,13 +28,11 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
-    static Logger logger = LoggerFactory.getLogger(JwtTokenAuthenticationFilter.class);
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         final String requestTokenHeader = request.getHeader("Authorization"); // The token
-        System.out.println(requestTokenHeader);
+        log.info(requestTokenHeader);
         String username = null;
         String jwtToken = null;
 
@@ -45,16 +42,16 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 username = this.jwtTokenUtil.extractUsername(jwtToken); // Extracting the username from Jwt token
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();
-                logger.error("Unable to get Jwt token");
+                log.error("Unable to get Jwt token");
             } catch (ExpiredJwtException e) {
                 e.printStackTrace();
-                logger.error("Jwt token has expired");
+                log.error("Jwt token has expired");
             } catch (Exception e) {
                 e.printStackTrace();
-                logger.error("Error");
+                log.error("Error");
             }
         } else {
-            logger.error("Token does not start with Bearer");
+            log.error("Token does not start with Bearer");
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             final UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
@@ -63,7 +60,7 @@ public class JwtTokenAuthenticationFilter extends OncePerRequestFilter {
                 usernamePasswordAuthenticationtoken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationtoken);
             } else {
-                logger.error("Token is not valid");
+                log.error("Token is not valid");
             }
         }
         filterChain.doFilter(request, response);

@@ -10,19 +10,18 @@
           <h1 class="text-center">User Login</h1>
 
           <div class="container text-center">
-            <form>
+            <form (ngSubmit)="formSubmit()">
 
               <!-- Username Field -->
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Username</mat-label>
-                <input required name="username" matInput placeholder="Enter Here">
-                <mat-hint>Valid Username</mat-hint>
+                <input [(ngModel)]="loginData.username" name="username" required name="username" matInput placeholder="Enter Here">
               </mat-form-field>
 
               <!-- Password Field -->
               <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Password</mat-label>
-                <input matInput required [type]="showPassword ? 'text' : 'password'" name="password" type="password" matInput>
+                <input [(ngModel)]="loginData.password" name="password" matInput required [type]="showPassword ? 'text' : 'password'" name="password" type="password" matInput>
                 <mat-icon matSuffix (click)="togglePasswordVisibility()">
                   {{showPassword?'visibility_off':'visibility'}}
                 </mat-icon>

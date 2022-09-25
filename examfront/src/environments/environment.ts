@@ -3,5 +3,5 @@ export const environment = {
 };
 
 // Server Port of Backend
-let baseUrl="http://localhost:8082";
+let baseUrl="http://localhost:8080";
 export default baseUrl;

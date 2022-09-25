@@ -5,13 +5,13 @@ import com.armaan.examserver.user.entity.UserRole;
 import com.armaan.examserver.user.repository.RoleRepository;
 import com.armaan.examserver.user.repository.UserRepository;
 import com.armaan.examserver.user.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -21,8 +21,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private RoleRepository roleRepository;
 
-    static Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
-
     // Creating User
     @Override
     public User createUser(User user, Set<UserRole> userRoles) throws Exception {
@@ -31,7 +29,7 @@ public class UserServiceImpl implements UserService {
         User userLocal;
 
         if (local != null) {
-            logger.error("User already present");
+            log.error("User already present");
             throw new Exception("User already present");
         } else {
             for (UserRole ur : userRoles) {
