@@ -47,13 +47,28 @@ export class LoginComponent implements OnInit {
 
     // Request server to generate token
     this.loginService.generateToken(this.loginData).subscribe(
-      (data: any) => {
-        console.log("Success");
-        console.log(data);
+      (data: any) => { // data contains token
+
+        // Login
+        this.loginService.loginUser(data.token);
+        this.loginService.getCurrentUser().subscribe(
+          (user: any) => {
+            this.loginService.setUser(user);
+            if (this.loginService.getUserRole() == "ADMIN") {
+              window.location.href="/admin-dashboard";
+            }
+            else if (this.loginService.getUserRole() == "NORMAL") {
+              window.location.href="/user-dashboard";
+            } else {
+              this.loginService.logout();
+            }
+          }
+        );
       },
       (error) => {
-        console.log("Error");
-        console.log(error);
+        this.snack.open("Invalid Details! Try again.", '', {
+          duration: 3000
+        });
       }
     );
   }

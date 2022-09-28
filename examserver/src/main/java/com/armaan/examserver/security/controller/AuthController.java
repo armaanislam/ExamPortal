@@ -4,6 +4,7 @@ import com.armaan.examserver.security.config.JwtTokenUtil;
 import com.armaan.examserver.security.entity.JwtTokenRequest;
 import com.armaan.examserver.security.entity.JwtTokenResponse;
 import com.armaan.examserver.security.serviceImpl.JwtUserDetailsServiceImpl;
+import com.armaan.examserver.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,10 +12,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @CrossOrigin (origins = "*")
@@ -51,5 +51,11 @@ public class AuthController {
         UserDetails userDetails = this.jwtUserDetailsServiceImpl.loadUserByUsername(jwtTokenRequest.getUsername());
         String token = this.jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtTokenResponse(token));
+    }
+
+    // Get current logged-in user; The user for which the token was generated
+    @GetMapping("/current-user")
+    public User getCurrentUser(Principal principal) { // User Entity not User from UserDetails
+        return (User) this.jwtUserDetailsServiceImpl.loadUserByUsername(principal.getName());
     }
 }
