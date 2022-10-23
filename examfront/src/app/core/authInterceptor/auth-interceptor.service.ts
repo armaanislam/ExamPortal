@@ -1,7 +1,7 @@
 import {HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Injectable} from "@angular/core";
-import {LoginService} from "../../services/loginService/login.service";
+import {LoginService} from "../../pages/login/services/login.service";
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor { // This will be automatically called when a request is made

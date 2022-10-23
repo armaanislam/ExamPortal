@@ -1,0 +1,91 @@
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row mt20">
+
+      <div class="col-md-6 offset-md-3">
+        <mat-card>
+          <div class="container text-center">
+            <img src="/src/assets/logo.png" alt="" style="width: 100px">
+          </div>
+
+          <h1 class="text-center">Account Registration</h1>
+
+          <div class="container text-center">
+            <form [formGroup]="signupForm" (ngSubmit)="formSubmit()">
+
+              <!-- Username Field -->
+              <mat-form-field class="full-width form-control" appearance="outline">
+                <mat-label>Username</mat-label>
+                <input formControlName="username" matInput placeholder="Enter Here">
+                <mat-hint>Username must be unique</mat-hint>
+                <mat-error *ngIf="form.username.touched && form.username.invalid" class="alert alert-danger">
+                  <small *ngIf="form.username.errors?.['required']">Username is required.</small>
+                  <small *ngIf="form.username.errors?.['minlength']">Username should be a minimum of length 3.</small>
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Password Field -->
+              <mat-form-field class="full-width form-control" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="password" [type]="showPassword ? 'text' : 'password'" type="password" matInput>
+                <mat-icon matSuffix (click)="togglePasswordVisibility()">
+                  {{showPassword?'visibility_off':'visibility'}}
+                </mat-icon>
+                <mat-error *ngIf="form.password.touched && form.password.invalid" class="alert alert-danger">
+                  <small *ngIf="form.password.errors?.['required']">Password is required.</small>
+                  <small *ngIf="form.password.errors?.['pattern']">Password should be a minimum length of 3 containing one number and one letter.</small>
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Firstname Field -->
+              <mat-form-field class="full-width form-control" appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input formControlName="firstName" matInput placeholder="Enter Here">
+                <mat-error *ngIf="form.firstName.touched && form.firstName.invalid" class="alert alert-danger">
+                  <small *ngIf="form.firstName.errors?.['required']">First name is required.</small>
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Lastname Field -->
+              <mat-form-field class="full-width form-control" appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input formControlName="lastName" matInput placeholder="Enter Here">
+                <mat-error *ngIf="form.lastName.touched && form.lastName.invalid" class="alert alert-danger">
+                  <small *ngIf="form.lastName.errors?.['required']">Last name is required.</small>
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Email Field -->
+              <mat-form-field class="full-width form-control" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input formControlName="email" type="email" matInput placeholder="Enter Here">
+                <mat-hint>Ex: example@gmail.com</mat-hint>
+                <mat-error *ngIf="form.email.touched && form.email.invalid" class="alert alert-danger">
+                  <small *ngIf="form.email.errors?.['required']">Email is required.</small>
+                  <small *ngIf="form.email.errors?.['email']">Invalid Email.</small>
+                </mat-error>
+              </mat-form-field>
+
+              <!-- Phone Field -->
+              <mat-form-field class="full-width form-control" appearance="outline">
+                <mat-label>Contact Number</mat-label>
+                <input formControlName="phone" type="number" matInput placeholder="Enter Here">
+                <mat-hint>Ex: +8801700000000, 01700000000</mat-hint>
+                <mat-error *ngIf="form.phone.touched" class="alert alert-danger">
+                  <small *ngIf="form.phone.errors?.['required']">Phone number is required.</small>
+                  <small *ngIf="form.phone.errors?.['pattern']">Invalid phone number.</small>
+                </mat-error>
+              </mat-form-field>
+
+              <div class="container text-center">
+                <button type="submit" mat-raised-button color="primary">Register</button>
+                <button class="ml20" mat-raised-button color="warn">Clear</button>
+              </div>
+
+            </form>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</div>
